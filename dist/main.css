@@ -1,0 +1,18 @@
+.header-container .header-bar {
+  background-color: #4285F4; }
+
+.generator-container {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+
+
+.promotions-container {
+  overflow: scroll;
+  max-height: 428px;
+  margin-top: 40px; }
+
+.app-container .content {
+  padding: 10px; }
+
