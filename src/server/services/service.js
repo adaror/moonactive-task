@@ -1,4 +1,5 @@
 const db = require('../db');
+const {v4: uuidv4} = require('uuid');
 
 const PromotionList = db.models.promotions_list;
 
@@ -8,6 +9,7 @@ async function generateData() {
 
     for (let i = 0; i < 500; i++) {
       dataArr.push({
+        id: uuidv4(),
         promotionName: 'myPromotion',
         type: 'game',
         userGroupName: 'myGroup1',
@@ -24,7 +26,7 @@ async function generateData() {
 
 async function getPromotions(page) {
   try {
-    const data = await PromotionList.find({}, null, { skip: page, limit: 10 }).select('promotionName type startDate endDate userGroupName -_id');
+    const data = await PromotionList.find({}, null, { skip: page, limit: 10 }).select('id promotionName type startDate endDate userGroupName _id');
     return data;
   } catch (err) {
     console.error('error in getPromotions');

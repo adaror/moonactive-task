@@ -15,6 +15,7 @@ class Generator extends React.Component {
 
   onGeneratorBtnClick() {
     this.props.insertPromotionDetails(0);
+    this.props.insertPromotionDetails(10);
   }
 
   render() {

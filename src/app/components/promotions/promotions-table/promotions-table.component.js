@@ -8,10 +8,12 @@ import {
   TableHead,
   TableRow,
   Checkbox,
+  Paper
 } from '@material-ui/core';
 import './promotions-table.style.scss';
 
 class PromotionsTable extends React.Component {
+  ref = React.createRef();
   constructor(props) {
     super(props);
 
@@ -22,7 +24,7 @@ class PromotionsTable extends React.Component {
     const rowsArr = [];
     for (let i = 0; i < this.props.values.length; i++) {
       rowsArr.push(
-        <TableRow key={i}>
+        <TableRow key={this.props.values[i].id}>
           {
               Object.values(this.props.values[i]).map(
                 (value, index) => <TableCell key={index}>{value}</TableCell>,
@@ -36,30 +38,35 @@ class PromotionsTable extends React.Component {
 
   render() {
     return (
-      <div
-        className="promotion-table-container"
-      >
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {
-                    this.props.keys.length > 0
-                      ? this.props.keys.map((key) => <TableCell key={key}>{key}</TableCell>)
-                      : null
-                }
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {
-                      this.props.values.length > 0
-                        ? this.getTableRows()
+        <Paper>
+          <TableContainer 
+          ref={this.ref}
+          onScroll={() => this.props.onTableScroll(this.ref.current)}
+          style={{maxHeight: 428}}
+          >
+            <Table 
+            stickyHeader
+            aria-label="sticky table"
+            >
+              <TableHead>
+                <TableRow>
+                  {
+                      this.props.keys.length > 0
+                        ? this.props.keys.map((key) => <TableCell key={key}>{key}</TableCell>)
                         : null
-                    }
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+                  }
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {
+                        this.props.values.length > 0
+                          ? this.getTableRows()
+                          : null
+                      }
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
     );
   }
 }
@@ -67,6 +74,7 @@ class PromotionsTable extends React.Component {
 PromotionsTable.defaultProps = {
   keys: PropTypes.array,
   values: PropTypes.array,
+  onTableScroll: PropTypes.func
 };
 
 export default PromotionsTable;

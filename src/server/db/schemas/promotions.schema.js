@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const promotionsSchema = new Schema({
-  promotionName: { type: String, index: true },
-  type: { type: String, index: true },
+  id: {type: String, index: true},
+  promotionName: { type: String },
+  type: { type: String },
   startDate: { type: Date, default: Date.now },
   endDate: { type: Date, default: Date.now },
   userGroupName: { type: String },

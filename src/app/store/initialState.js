@@ -1,4 +1,4 @@
 export const initialState = {
   promotions: [],
-  page: 0,
+  page: 10,
 };

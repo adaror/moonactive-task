@@ -6,33 +6,44 @@ import { insertPromotionDetails, setPage, insertTopPromotionDetails, cleanArray 
 import './promotion.style.scss';
 
 class Promotions extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.onScroll = this.onScroll.bind(this);
-    this.getTableKeys = this.getTableKeys.bind(this);
-  }
-
-  componentDidMount() {
-    this.refs.promotionScroll.addEventListener('scroll', this.onScroll);
-  }
-
-  onScroll() {
+  prevScrollPosition = 0;
+  onScroll = (ref) => {
     const currentPage = this.props.page;
     const newPage = currentPage + 10;
 
-    if (this.refs.promotionScroll.scrollTop + this.refs.promotionScroll.clientHeight >= this.refs.promotionScroll.scrollHeight) {
-      this.props.insertPromotionDetails(newPage);
-      this.props.setPage(newPage); 
-    } 
-    else if (this.refs.promotionScroll.scrollTop <= 100 && this.refs.promotionScroll.scrollTop >= 0 && currentPage >=10) {
-      this.props.setPage(currentPage - 10); 
-      this.props.insertTopPromotionDetails(currentPage - 10);
-    } else if (currentPage === 0) {
-      this.props.cleanArray();
-    } 
+    if (this.prevScrollPosition < ref.scrollTop) {
+      if (ref.scrollTop > ref.scrollHeight / 2) {
+        this.props.insertPromotionDetails(newPage);
+        this.props.setPage(newPage);
+        ref.scrollTop = 0;
+      }
+    } else {
+      if (ref.scrollTop === 0 && currentPage > 10) {
+        this.props.setPage(currentPage - 10);
+        this.props.insertTopPromotionDetails(currentPage - 20);
+        ref.scrollTop = ref.clientHeight;
+      }
+      if (ref.scrollTop < (ref.clientHeight / 2) && currentPage > 10) {
+        this.props.insertTopPromotionDetails(currentPage - 10);
+        this.props.setPage(currentPage - 10);
+      }
+      console.log('up')
+    }
+    this.prevScrollPosition = ref.scrollTop;
+    //load to buttom
+    // if (ref.promotionScroll.scrollTop + this.refs.promotionScroll.clientHeight >= this.refs.promotionScroll.scrollHeight) {
+    //   this.props.insertPromotionDetails(newPage);
+    //   this.props.setPage(newPage);
+    // }
+    // // load to top 
+    // else if (ref.promotionScroll.scrollTop === 0 && currentPage > 10) {
+    //   this.props.setPage(currentPage - 10); 
+    //   this.props.insertTopPromotionDetails(currentPage - 20);
+    //   this.refs.promotionScroll.scrollTop = this.refs.promotionScroll.clientHeight / 2;
+    // }
   }
-  getTableKeys() {
+
+  getTableKeys = () => {
     if (this.props.promotions.length > 0) {
       return Object.keys(this.props.promotions[0]);
     }
@@ -43,12 +54,12 @@ class Promotions extends React.Component {
     return (
       <div
         className="promotions-container"
-        ref="promotionScroll"
+        //ref="promotionScroll"
       >
         <PromotionsTable
           keys={this.props.promotions.length > 0 ? Object.keys(this.props.promotions[0]) : []}
           values={this.props.promotions.length > 0 ? this.props.promotions : []}
-          onScroll={this.onScroll}
+          onTableScroll={this.onScroll}
         />
       </div>
     );
