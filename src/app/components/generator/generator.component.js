@@ -12,17 +12,16 @@ class Generator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      toShowSpinner: false,
+      showSpinner: false,
     };
-    this.onGeneratorBtnClick = this.onGeneratorBtnClick.bind(this);
   }
 
-  onGeneratorBtnClick() {
-    this.setState({ toShowSpinner: true });
+  onGeneratorBtnClick = () => {
+    this.setState({ showSpinner: true });
     promotionsService.generateData().then(() => {
       this.props.insertPromotionDetails(0);
       this.props.insertPromotionDetails(10);
-      this.setState({ toShowSpinner: false });
+      this.setState({ showSpinner: false });
     }).catch((err) => {
       console.error(err);
     });
@@ -38,7 +37,7 @@ class Generator extends React.Component {
         >
           Generate Data
         </Button>
-        {this.state.toShowSpinner
+        {this.state.showSpinner
         && (
         <div className="generator-loader">
           <Loader
