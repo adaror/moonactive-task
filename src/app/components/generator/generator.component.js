@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import Loader from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { connect } from 'react-redux';
 import './generator.style.scss';
 import * as promotionsService from '../../services/promotions.service';
@@ -9,13 +11,21 @@ import { insertPromotionDetails } from '../../store/actions/promotions.action';
 class Generator extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      toShowSpinner: false,
+    };
     this.onGeneratorBtnClick = this.onGeneratorBtnClick.bind(this);
   }
 
   onGeneratorBtnClick() {
-    this.props.insertPromotionDetails(0);
-    this.props.insertPromotionDetails(10);
+    this.setState({ toShowSpinner: true });
+    promotionsService.generateData().then(() => {
+      this.props.insertPromotionDetails(0);
+      this.props.insertPromotionDetails(10);
+      this.setState({ toShowSpinner: false });
+    }).catch((err) => {
+      console.error(err);
+    });
   }
 
   render() {
@@ -28,6 +38,17 @@ class Generator extends React.Component {
         >
           Generate Data
         </Button>
+        {this.state.toShowSpinner
+        && (
+        <div className="generator-loader">
+          <Loader
+            type="Bars"
+            color="#00BFFF"
+            height={100}
+            width={100}
+          />
+        </div>
+        )}
       </div>
     );
   }

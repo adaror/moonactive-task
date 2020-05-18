@@ -14,6 +14,7 @@ class Promotions extends React.Component {
     const currentPage = this.props.page;
     const newPage = currentPage + 10;
 
+    // when scrolling down
     if (this.prevScrollPosition < ref.scrollTop) {
       if (ref.scrollTop > ref.scrollHeight / 2) {
         this.props.insertPromotionDetails(newPage);
@@ -21,6 +22,7 @@ class Promotions extends React.Component {
         ref.scrollTop = 0;
       }
     } else {
+      // when scrolling up
       if (ref.scrollTop < (ref.scrollHeight / 2) && currentPage > 10) {
         this.props.insertTopPromotionDetails(currentPage - 20);
         this.props.setPage(currentPage - 10);
@@ -51,13 +53,14 @@ class Promotions extends React.Component {
         className="promotions-container"
       >
         <PromotionOptions />
+        {this.props.promotions.length > 0 &&
         <PromotionsTable
           keys={this.props.promotions.length > 0 ? Object.keys(this.props.promotions[0]) : []}
           values={this.props.promotions.length > 0 ? this.props.promotions : []}
           onTableScroll={this.onScroll}
           togglePromotionsInList={this.togglePromotionsInList}
           selectedPromotions={this.props.selectedPromotions}
-        />
+        />}
       </div>
     );
   }

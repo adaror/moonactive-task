@@ -7,7 +7,7 @@ async function generateData() {
   try {
     const dataArr = [];
 
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 10000; i++) {
       dataArr.push({
         id: uuidv4(),
         promotionName: 'myPromotion',
@@ -16,7 +16,6 @@ async function generateData() {
       });
     }
     await PromotionList.insertMany(dataArr);
-    console.log('inserted');
     return true;
   } catch (err) {
     console.error('error in generateData');
