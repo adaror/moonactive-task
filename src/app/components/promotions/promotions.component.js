@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PromotionsTable from './promotions-table/promotions-table.component';
 import PromotionOptions from './promotions-options/promotion-options.component';
-import { insertPromotionDetails, setPage, insertTopPromotionDetails, cleanArray } from '../../store/actions/promotions.action';
+import { insertPromotionDetails, setPage, insertTopPromotionDetails } from '../../store/actions/promotions.action';
 import { insertPromotionToList, removePromotionToList } from '../../store/actions/selected-promotions.action';
 import './promotion.style.scss';
 
@@ -72,7 +72,6 @@ Promotions.propTypes = {
   setPage: PropTypes.func,
   page: PropTypes.number,
   insertTopPromotionDetails: PropTypes.func,
-  cleanArray: PropTypes.func,
   insertPromotionToList: PropTypes.func,
   removePromotionToList: PropTypes.func,
   selectedPromotions: PropTypes.object
@@ -88,7 +87,6 @@ const mapDispatchToProps = {
   insertPromotionDetails,
   setPage,
   insertTopPromotionDetails,
-  cleanArray,
   insertPromotionToList,
   removePromotionToList
 };

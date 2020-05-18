@@ -16,26 +16,21 @@ class PromotionsTable extends React.Component {
   ref = React.createRef();
 
   getTableRows = () => {
-    const rowsArr = [];
-    for (let i = 0; i < this.props.values.length; i++) {
-      rowsArr.push(
-        <TableRow key={this.props.values[i].id}>
-          
-              <TableCell padding="checkbox">
-                <Checkbox 
-                  checked={!!this.props.selectedPromotions[this.props.values[i].id]}
-                  onClick={(e) => {this.props.togglePromotionsInList(e, this.props.values[i])}} 
-                />
-              </TableCell>
+    return this.props.values.map((value) => (         
+      <TableRow key={value.id}> 
+        <TableCell padding="checkbox">
+          <Checkbox 
+            checked={!!this.props.selectedPromotions[value.id]}
+            onClick={(e) => {this.props.togglePromotionsInList(e, value)}} 
+          />
+        </TableCell>
         {
-              Object.values(this.props.values[i]).map(
-                (value, index) => <TableCell key={index}>{value}</TableCell>,
-              )
+        Object.values(value).map(
+          (param, index) => <TableCell key={index}>{param}</TableCell>,
+        )
         }
-        </TableRow>,
-      );
-    }
-    return rowsArr;
+    </TableRow>
+    ));
   }
 
   render() {
