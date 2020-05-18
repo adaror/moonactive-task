@@ -10,7 +10,7 @@ const insertPromotionsReducer = (state = initialState.promotions, action) => {
       }
       return [...state, ...action.data.promotions];
     case INSERT_TOP_PROMOTION_DETAILS: {
-        return [ ...action.data.promotions, ...state.slice(0, 20)];}
+        return [ ...action.data.promotions, ...state.slice(0, 10)];}
     case CLEAN_ARRAY:
       return state.splice(0, 9);
     default:

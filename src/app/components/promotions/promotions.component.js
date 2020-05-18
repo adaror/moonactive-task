@@ -7,6 +7,7 @@ import './promotion.style.scss';
 
 class Promotions extends React.Component {
   prevScrollPosition = 0;
+
   onScroll = (ref) => {
     const currentPage = this.props.page;
     const newPage = currentPage + 10;
@@ -18,29 +19,13 @@ class Promotions extends React.Component {
         ref.scrollTop = 0;
       }
     } else {
-      if (ref.scrollTop === 0 && currentPage > 10) {
-        this.props.setPage(currentPage - 10);
+      if (ref.scrollTop < (ref.scrollHeight / 2) && currentPage > 10) {
         this.props.insertTopPromotionDetails(currentPage - 20);
-        ref.scrollTop = ref.clientHeight;
-      }
-      if (ref.scrollTop < (ref.clientHeight / 2) && currentPage > 10) {
-        this.props.insertTopPromotionDetails(currentPage - 10);
         this.props.setPage(currentPage - 10);
+        ref.scrollTop = ref.scrollHeight;
       }
-      console.log('up')
     }
     this.prevScrollPosition = ref.scrollTop;
-    //load to buttom
-    // if (ref.promotionScroll.scrollTop + this.refs.promotionScroll.clientHeight >= this.refs.promotionScroll.scrollHeight) {
-    //   this.props.insertPromotionDetails(newPage);
-    //   this.props.setPage(newPage);
-    // }
-    // // load to top 
-    // else if (ref.promotionScroll.scrollTop === 0 && currentPage > 10) {
-    //   this.props.setPage(currentPage - 10); 
-    //   this.props.insertTopPromotionDetails(currentPage - 20);
-    //   this.refs.promotionScroll.scrollTop = this.refs.promotionScroll.clientHeight / 2;
-    // }
   }
 
   getTableKeys = () => {
@@ -54,7 +39,6 @@ class Promotions extends React.Component {
     return (
       <div
         className="promotions-container"
-        //ref="promotionScroll"
       >
         <PromotionsTable
           keys={this.props.promotions.length > 0 ? Object.keys(this.props.promotions[0]) : []}
