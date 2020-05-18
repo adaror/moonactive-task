@@ -2,7 +2,7 @@ import React from 'react';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import './header.style.scss';
 
-export const Header = (props) => (
+export const Header = () => (
   <div className="header-container">
     <AppBar
       position="static"

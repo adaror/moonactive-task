@@ -27,5 +27,6 @@
         "class-methods-use-this": "off",
         "no-unused-expressions": "off",
         "no-plusplus": "off",
+        "react/no-string-refs": "off"
     }
 }

@@ -14,18 +14,20 @@ import './promotions-table.style.scss';
 
 class PromotionsTable extends React.Component {
   ref = React.createRef();
-  constructor(props) {
-    super(props);
 
-    this.getTableRows = this.getTableRows.bind(this);
-  }
-
-  getTableRows() {
+  getTableRows = () => {
     const rowsArr = [];
     for (let i = 0; i < this.props.values.length; i++) {
       rowsArr.push(
         <TableRow key={this.props.values[i].id}>
-          {
+          
+              <TableCell padding="checkbox">
+                <Checkbox 
+                  checked={!!this.props.selectedPromotions[this.props.values[i].id]}
+                  onClick={(e) => {this.props.togglePromotionsInList(e, this.props.values[i])}} 
+                />
+              </TableCell>
+        {
               Object.values(this.props.values[i]).map(
                 (value, index) => <TableCell key={index}>{value}</TableCell>,
               )
@@ -50,6 +52,7 @@ class PromotionsTable extends React.Component {
             >
               <TableHead>
                 <TableRow>
+                <TableCell padding="checkbox" />
                   {
                       this.props.keys.length > 0
                         ? this.props.keys.map((key) => <TableCell key={key}>{key}</TableCell>)
@@ -71,10 +74,12 @@ class PromotionsTable extends React.Component {
   }
 }
 
-PromotionsTable.defaultProps = {
+PromotionsTable.propTypes = {
   keys: PropTypes.array,
   values: PropTypes.array,
-  onTableScroll: PropTypes.func
+  onTableScroll: PropTypes.func,
+  togglePromotionsInList: PropTypes.func,
+  selectedPromotions: PropTypes.object
 };
 
 export default PromotionsTable;
