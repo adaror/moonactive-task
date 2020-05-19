@@ -5,6 +5,7 @@ const PromotionList = db.models.promotions_list;
 
 async function generateData() {
   try {
+    await PromotionList.remove({});
     const dataArr = [];
 
     for (let i = 0; i < 10000; i++) {

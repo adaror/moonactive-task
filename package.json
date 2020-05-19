@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2 start src/server/index.js --watch",
+    "start-server": "pm2 start src/server/index.js --watch",
+    "start": "webpack -wd",
     "stop": "pm2 stop all",
-    "build": "webpack -wd"
+    "build": "webpack -d"
   },
   "author": "Or Adar",
   "license": "ISC",
